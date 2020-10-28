@@ -10,20 +10,37 @@ module.exports = {
   },
   module: {
     rules: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader'
-      }
-    }]
+        test: /\.js$|\.jsx$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.(jpg|png|svg)$/,
+        use: {
+          loader: 'url-loader',
+        },
+      },
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html'
     }),
     new CompressionPlugin({
-      test: /\.js$|\.css$|\.html$/,
+      test: /\.js$|\.jsx$|\.css$|\.html$/,
       minRatio: 0.8
     })
-  ]
+  ],
+  optimization: {
+    usedExports: true,
+  }
 }

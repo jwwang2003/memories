@@ -1,0 +1,15 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    font-family: museo-sans, helvetica, "Microsoft YaHei", 微软雅黑, STXihei, 华文细黑, sans-serif; 
+    -webkit-font-smoothing: antialiased;
+}
+
+#root {
+    height: 100%;
+}

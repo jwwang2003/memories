@@ -1,0 +1,163 @@
+:root {
+  --color-google: #fafafa;
+  --color-facebook: #3B5998;
+  --color-weixin: #2BA245;
+}
+
+.container {
+  background-color: rgb(30, 30, 30);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 20px;
+  overflow-y: auto;
+  min-height: 100%;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+  width: 50%;
+  max-width: 400px;
+  background: rgb(255, 255, 255);
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px -2px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.disabled {
+  filter: opacity(0.5);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Button styling */
+
+.thirdParty {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.thirdParty>.button {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5px;
+  margin-right: 7.5px;
+}
+
+.button {
+  font-size: 18px;
+  text-align: center;
+
+  user-select: none;
+  cursor: pointer;
+
+  align-items: center;
+  height: 25px;
+
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+
+  color: white;
+  outline: none;
+  border: none;
+  background: rgb(20, 20, 20);
+
+  border-radius: 20px;
+}
+
+.auth {
+  box-shadow: 4px 4px 5px -2px rgba(0, 0, 0, 0.5);
+  transition: 0.2s ease;
+  -webkit-transition: 0.2s ease;
+}
+
+.auth:hover {
+  transform: translateY(-2px);
+  -webkit-transform: translateY(-2px);
+  box-shadow: none;
+}
+
+.auth>img {
+  height: 100%;
+  transition: 0.2s ease;
+  -webkit-transition: 0.2s ease;
+  margin-right: 2px;
+}
+
+.auth:hover img {
+  transform: translateY(-5px);
+  -webkit-transform: translateY(-5px);
+}
+
+.auth:last-child {
+  margin-right: 0;
+}
+
+/* Input styling */
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.inputs:last-child {
+  margin-bottom: 0;
+}
+
+.input {
+  margin-bottom: 15px;
+}
+
+.input:last-child {
+  margin-bottom: 0;
+}
+
+/* Mini nav links */
+
+.miniLink {
+  font-size: 12px;
+  text-align: end;
+  cursor: pointer;
+  color: black;
+}
+
+.miniLink:last-child {
+  margin-bottom: 0;
+}
+
+.miniLink a {
+  text-decoration: none;
+  color: black;
+}
+
+.back {
+  text-align: start;
+  margin-bottom: 10px;
+}
+
+/* Specific styling for login buttons*/
+
+.google_btn {
+  background: var(--color-google);
+  color: black
+}
+
+.facebook_btn {
+  background: var(--color-facebook)
+}
+
+.weixin_btn {
+  background: var(--color-weixin)
+}
