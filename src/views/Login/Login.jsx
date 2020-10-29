@@ -51,7 +51,7 @@ function postAuth(success, err) {
   document.getElementById('login').className = `${styles.login}`;
 }
 
-function Login(props) {
+function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
