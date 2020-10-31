@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { HashRouter as BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
