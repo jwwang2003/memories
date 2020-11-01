@@ -1,16 +1,16 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { h } from 'preact';
 
-class ProtectedRoute extends Component {
-  render() {
-    const Component = this.props.component;
-    const isAuth = this.props.isAuth;
-    return isAuth ? (
-      <Component></Component>
-    ) : (
-      <Redirect to={{ pathname: this.props.fallBackLink }} />
-    );
-  }
+function ProtectedRoute(props) {
+  const Component = props.component;
+  const isUser = props.user;
+
+  return isUser ? (
+    <Component></Component>
+  ) : (
+    <Redirect to={{ pathname: this.props.fallBackLink }} />
+  );
 }
 
 export default ProtectedRoute;

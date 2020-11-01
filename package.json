@@ -1,12 +1,11 @@
 {
-  "name": "memories",
+  "name": "memories-optimized",
   "version": "1.0.0",
-  "description": "Random Access Memories",
+  "description": "Random access memories - experience, capture, upload, access",
   "main": "index.js",
   "scripts": {
     "start": "webpack serve --mode development --open --hot --progress",
-    "build": "webpack --mode production",
-    "build:analyze": "npm run build -- --env.addons=bundleanalyzer"
+    "build": "webpack --mode production"
   },
   "author": "Jimmy Wang & Brian Xue",
   "license": "MIT",
@@ -14,22 +13,25 @@
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "firebase": "^8.0.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "preact": "^10.5.5",
+    "preact-motion": "^1.2.0",
+    "preact-router": "^3.2.1",
     "react-firebase-hooks": "^2.2.0",
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
+    "@babel/plugin-transform-react-jsx": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
-    "babel-core": "^6.26.3",
     "babel-loader": "^8.1.0",
-    "compression-webpack-plugin": "^6.0.4",
     "css-loader": "^5.0.0",
     "html-webpack-plugin": "^4.5.0",
-    "style-loader": "^2.0.0",
+    "styles-loader": "^2.0.0",
     "url-loader": "^4.1.1",
-    "webpack": "^5.3.0"
+    "webpack": "^5.3.2",
+    "webpack-bundle-analyzer": "^3.9.0",
+    "webpack-cli": "^4.1.0",
+    "webpack-dev-server": "^3.11.0"
   }
 }

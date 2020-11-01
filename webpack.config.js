@@ -1,6 +1,6 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CompressionPlugin = require('compression-webpack-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
   entry: {
@@ -9,6 +9,9 @@ module.exports = {
   output: {
     path: path.join(__dirname, '/dist'),
     filename: '[name].bundle.js',
+  },
+  devServer: {
+    historyApiFallback: true
   },
   module: {
     rules: [{
@@ -26,21 +29,24 @@ module.exports = {
         ]
       },
       {
-        test: /\.(jpg|png|svg)$/,
+        test: /\.(jpg|jpeg|png|svg)$/,
         use: {
           loader: 'url-loader',
         },
       },
     ]
   },
+  resolve: {
+    alias: {
+      "react": "preact/compat",
+      "react-dom": "preact/compat"
+    }
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html'
     }),
-    new CompressionPlugin({
-      test: /\.js$|\.jsx$|\.css$|\.html$/,
-      minRatio: 0.8
-    })
+    new BundleAnalyzerPlugin(),
   ],
   optimization: {
     usedExports: true,
