@@ -1,0 +1,17 @@
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.container_bg {
+  position: absolute;
+  margin: auto;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.container_bg svg g {
+  height: 100%;
+  object-fit: cover;
+}
