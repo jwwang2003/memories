@@ -4,6 +4,7 @@
   "description": "Random access memories",
   "main": "index.js",
   "dependencies": {
+    "@types/react-router-dom": "^5.1.6",
     "firebase": "^8.0.0",
     "preact": "^10.5.5",
     "react": "^17.0.1",

@@ -1,9 +1,12 @@
 import * as React from "preact/compat";
 import * as ReactDOM from "preact/compat";
+import './index.css';
 
-import { App } from "./App";
+import App from "./App";
 
 ReactDOM.render(
-  <App userName="Beveloper" lang="TypeScript" />,
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
   document.getElementById("root")
 );

@@ -35,7 +35,11 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"]
+    extensions: [".ts", ".tsx", ".js", ".jsx"],
+    alias: {
+      "react": "preact/compat",
+      "react-dom": "preact/compat"
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({
