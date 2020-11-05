@@ -1,8 +1,7 @@
 import * as React from "preact/compat";
-import { useState, useEffect } from "preact/compat";
-import { HashRouter as BrowserRouter, Link, Switch, Route, useHistory } from "react-router-dom";
+import { useState } from "preact/compat";
+import { HashRouter as BrowserRouter, Link, Switch, Route } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
 
 import './Login.less';
 

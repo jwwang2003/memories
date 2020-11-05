@@ -34,7 +34,8 @@
     "webpack-dev-server": "^3.11.0"
   },
   "scripts": {
-    "start": "webpack serve --mode development -open"
+    "start": "webpack serve --mode development -open",
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
