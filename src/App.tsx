@@ -1,16 +1,20 @@
 import * as React from "preact/compat";
-import { useState, useEffect } from "preact/compat";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { useState, useEffect, Suspense } from "preact/compat";
+import { HashRouter as BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import * as firebase from "firebase/app"
 
-import { Home, Login, Main } from './views';
+// import { Home, Login, Main } from './views';
+//import { Home } from './views';
+const Home = React.lazy(() => import('./views/Home/Home'));
+const Login = React.lazy(() => import('./views/Login/Login'));
+const Main = React.lazy(() => import('./views/Main/Main'));
 import { ProtectedRoute }from './protectedRoute';
 
 export default function App() {
   const [ready, setReady] = useState<true | false>(false);
   const [user, setUser] = useState<firebase.default.User | false>(false);
-  
+
   useEffect(() => {
     import(/* webpackChunkName: "worker" */ './worker').then(() => {
       setReady(true);
@@ -19,7 +23,7 @@ export default function App() {
         if (user) setUser(user)
         else setUser(false)
       })
-    })
+    });
   })
 
   return (
@@ -27,9 +31,11 @@ export default function App() {
       <BrowserRouter>
         {user ? <Redirect to={{ pathname: '/main' }} /> : <></>}
         <Switch>
-          <Route exact path="/" component={() => <Home />} />
-          {ready ? <Route path="/login" component={() => <Login />} /> : <></> }
-          {ready ? <ProtectedRoute path="/main" user={user} component={() => <Main />} fallback="/login" /> : <></> }
+          <Suspense fallback={<></>}>
+            <Route exact path="/" component={() => <Home />} />
+            {ready ? <Route path="/login" component={() => <Login />} /> : <></> }
+            {ready ? <ProtectedRoute path="/main" user={user} component={() => <Main />} fallback="/login" /> : <></> }
+          </Suspense>
         </Switch>
       </BrowserRouter>
     </>
