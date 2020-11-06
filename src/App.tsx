@@ -1,7 +1,8 @@
 import * as React from "preact/compat";
 import { useState, useEffect, Suspense } from "preact/compat";
 import { HashRouter as BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import * as firebase from "firebase/app"
 
 // import { Home, Login, Main } from './views';
@@ -31,7 +32,7 @@ export default function App() {
       <BrowserRouter>
         {user ? <Redirect to={{ pathname: '/main' }} /> : <></>}
         <Switch>
-          <Suspense fallback={<></>}>
+          <Suspense fallback={<Loading />}>
             <Route exact path="/" component={() => <Home />} />
             {ready ? <Route path="/login" component={() => <Login />} /> : <></> }
             {ready ? <ProtectedRoute path="/main" user={user} component={() => <Main />} fallback="/login" /> : <></> }
@@ -41,3 +42,11 @@ export default function App() {
     </>
   )
 };
+
+function Loading() {
+  return (
+    <Backdrop open={true}>
+      <CircularProgress color="inherit" />
+    </Backdrop>
+  )
+}

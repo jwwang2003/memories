@@ -1,0 +1,37 @@
+.main {
+    display: grid;
+    grid-template-columns: 80px auto;
+    grid-template-rows: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    .sec_navbar {}
+
+    .sec_content {
+        position: relative;
+        overflow: auto;
+        padding-top: 50px;
+        box-sizing: border-box;
+
+        .top_navbar {
+            position: fixed;
+            top: 0;
+            height: 50px;
+            width: 100%;
+            background-color: white;
+        }
+    }
+
+    .sec_content::-webkit-scrollbar-track {
+        background-color: rgb(255, 255, 255);
+    }
+
+    .sec_content::-webkit-scrollbar {
+        width: 5px;
+        background-color: rgb(255, 255, 255);
+    }
+
+    .sec_content::-webkit-scrollbar-thumb {
+        background-color: var(--primary-color);
+    }
+}
