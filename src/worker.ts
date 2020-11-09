@@ -15,3 +15,5 @@ const config = {
 };
 
 firebase.default.initializeApp(config);
+
+firebase.default.firestore().enablePersistence();

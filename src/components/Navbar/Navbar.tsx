@@ -7,26 +7,43 @@ type NavbarProps = {
   handleLogout: Function
 }
 
+var prev: number = 0;
+function tabWorker(where: number) {
+  for (let i = 0; i < 5; ++i) {
+    if (i === where) {
+      document.getElementById(`indicator-${prev}`).className = "";
+      document.getElementById(`indicator-${where}`).className = "indicator";
+      prev = where;
+      break;
+    }
+  }
+}
+
 export default function Navbar({ handleLogout }: NavbarProps) {
   return (
     <div class="navbar">
-      <Link to="/main" className="item">
+      <Link to="/main" className="item" onClick={() => tabWorker(0)}>
+        <div id="indicator-0" class="indicator"></div>
         <RecentsIcon />
         <div>Recents</div>
       </Link>
-      <Link to="/main/chat" className="item">
+      <Link to="/main/chat" className="item" onClick={() => tabWorker(1)}>
+        <div id="indicator-1"></div>
         <ChatIcon />
         <div>Chat</div>
       </Link>
-      <Link to="/main/friends" className="item">
+      <Link to="/main/friends" className="item" onClick={() => tabWorker(2)}>
+        <div id="indicator-2"></div>
         <FriendsIcon />
         <div>Friends</div>
       </Link>
-      <Link to="/main/myself" className="item">
+      <Link to="/main/myself" className="item" onClick={() => tabWorker(3)}>
+        <div id="indicator-3"></div>
         <MyselfIcon />
         <div>Myself</div>  
       </Link>
-      <Link to="/main/settings" className="item">
+      <Link to="/main/settings" className="item" onClick={() => tabWorker(4)}>
+        <div id="indicator-4"></div>
         <SettingsIcon />
         <div>Settings</div>
       </Link>

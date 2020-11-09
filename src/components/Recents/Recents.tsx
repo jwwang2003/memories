@@ -1,34 +1,67 @@
+// @ts-nocheck
 import * as React from 'preact/compat';
 import './Recents.less';
 
 import * as firebase from 'firebase/app';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
+
+const db = firebase.default.firestore();
 
 export default function Recents() {
-  const { displayName, photoURL } = firebase.default.auth().currentUser;
+  const friendsRef = db.collection('users');
+  const friendsQuery = friendsRef.where(firebase.default.firestore.FieldPath.documentId(), '==', firebase.default.auth().currentUser.uid).limit(10);
+  const [friends] = useCollectionData(friendsQuery);
 
   return (
     <div class="recents">
+      {friends && friends[0].friends.map(friend => <GroupPost uid={friend} />)}
+    </div>
+  )
+}
+
+type GroupPost = {
+  uid: string
+}
+
+function GroupPost({ uid }: GroupPost) {
+  const userRef = db.collection('users');
+  const userQuery = userRef.where("userID", '==', uid);
+  const [user] = useCollectionData(userQuery);
+  
+  const postsRef = db.collection('posts').doc(uid).collection('posts');
+  const postsQuery = postsRef.orderBy('createdAt').limit(5);
+  const [posts] = useCollectionData(postsQuery);
+
+  return (
+    <>
       <div class="user">
         <div class="topBar">
-          <img src={photoURL}></img>
+          {user && <img src={user[0].photoURL}></img>}
         </div>
         <div class="posts">
-          <div class="post">
-            <div class="topBar">
-              November 12, 2020 @ 1:10pm
-            </div>
-            <div class="content">
-              Post1
-            </div>
-          </div>
-          <div class="post">
-            Post2
-          </div>
-          <div class="post">
-            Post2
-          </div>
+          {posts && posts.map(post => <Post createdAt={post.createdAt.toDate()} content={post.content}/>)}
         </div>
       </div>
-    </div>
+    </>
+  )
+}
+
+type PostProps = {
+  createdAt: Date,
+  content: string,
+}
+
+function Post({createdAt, content}: PostProps) {
+  return (
+    <>
+      <div class="post">
+        <div class="topBar">
+          {createdAt.toString()}
+        </div>
+        <div class="content">
+          {content}
+        </div>
+      </div>
+    </>
   )
 }

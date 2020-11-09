@@ -9,13 +9,19 @@ import * as firebase from 'firebase/app';
 
 type handleEmailProps = {
   email: string,
-  password: string
+  password: string,
+  displayname?: string,
+  userid?: string,
 }
 
 function googleSignIn() {
   preAuth();
   const provider = new firebase.default.auth.GoogleAuthProvider();
-  firebase.default.auth().signInWithPopup(provider).then(() => {
+  firebase.default.auth().signInWithPopup(provider).then(user => {
+    if (user.additionalUserInfo.isNewUser) {
+      console.log("YES")
+      initializeAccount({});
+    }
     postAuth();
   }).catch(() => {
     postAuth();
@@ -31,9 +37,10 @@ function handleLogin({ email, password }: handleEmailProps) {
   });
 }
 
-function handleRegister({ email, password }: handleEmailProps) {
+function handleRegister({ email, password, displayname, userid }: handleEmailProps) {
   preAuth();
   firebase.default.auth().createUserWithEmailAndPassword(email, password).then(() => {
+    initializeAccount({displayname, userid})
     postAuth();
   }).catch(() => {
     postAuth();
@@ -44,8 +51,25 @@ function handleRecover() {
 
 }
 
-function handleFinalize() {
+type initializeAccountProps = {
+  displayname?: string,
+  userid?: string,
+}
 
+function initializeAccount({displayname, userid}: initializeAccountProps) {
+  const { displayName, uid, email } = firebase.default.auth().currentUser;
+  console.log(displayName, uid, email)
+  const db = firebase.default.firestore();
+  db.collection('users').doc(uid).set({
+    displayName: displayname ? displayname : displayName,
+    userID: userid ? userid : email,
+    friends: [],
+    friendRequestsOutgoing: [],
+    friendRequestsIncoming: [],
+    createdAt: firebase.default.firestore.FieldValue.serverTimestamp(),
+    photoURL: firebase.default.auth().currentUser.photoURL,
+  }).catch(err => console.log(err))
+  db.collection('posts').doc(uid).set({});
 }
 
 function preAuth() {
@@ -60,8 +84,8 @@ export default function Login() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const [displayName, setDisplayName] = useState<string>('');
-  const [userID, setUserID] = useState<string>('');
+  const [displayname, setDisplayname] = useState<string>('');
+  const [userid, setUserid] = useState<string>('');
 
   return (
     <BrowserRouter>
@@ -72,13 +96,10 @@ export default function Login() {
               <Main email={email} setEmail={setEmail} password={password} setPassword={setPassword} handleLogin={() => handleLogin({email, password})}/>
             </Route>
             <Route exact path="/login/register">
-              <Register email={email} setEmail={setEmail} password={password} setPassword={setPassword} handleRegister={() => handleRegister({email, password})}/>
+              <Register email={email} setEmail={setEmail} password={password} setPassword={setPassword} displayName={displayname} setDisplayName={setDisplayname} userID={userid} setUserID={setUserid} handleRegister={() => handleRegister({email, password, userid, displayname})}/>
             </Route>
             <Route exact path="/login/recover">
               <Recover email={email} setEmail={setEmail} handleRecover={() => handleRecover()} />
-            </Route>
-            <Route exact path="/login/setup">
-              <Setup displayName={displayName} setDisplayName={setDisplayName} userID={userID} setUserID={setUserID} handleFinalize={() => handleFinalize()} />
             </Route>
           </Switch>
         </div>
@@ -116,14 +137,20 @@ type RegisterProps = {
   password: string,
   setEmail: React.StateUpdater<string>,
   setPassword: React.StateUpdater<string>,
+  displayName: string,
+  setDisplayName: React.StateUpdater<string>,
+  userID: string,
+  setUserID: React.StateUpdater<string>,
   handleRegister: Function,
 }
 
-function Register({email, password, setEmail, setPassword, handleRegister}: RegisterProps) {
+function Register({email, password, setEmail, setPassword, handleRegister, displayName, setDisplayName, userID, setUserID}: RegisterProps) {
   return (
     <>
       <TextField className="input" id="outlined-basic" label="Email" variant="outlined" type="email" value={email} onChange={e => setEmail(e.target.value)}/>
       <TextField className="input" id="outlined-basic" label="Password" variant="outlined" type="password" value={password} onChange={e => setPassword(e.target.value)}/>
+      <TextField className="input" id="outlined-basic" label="Display Name" variant="outlined" type="name" value={displayName} onChange={e => setDisplayName(e.target.value)}/>
+      <TextField className="input" id="outlined-basic" label="User ID" variant="outlined" type="user" value={userID} onChange={e => setUserID(e.target.value)}/>
       <div class="miniLink"><Link to="/login">Login with email</Link></div>
       <div class="button" onClick={() => handleRegister()}>Register</div>
     </>
@@ -142,24 +169,6 @@ function Recover({email, setEmail, handleRecover}: RecoverProps) {
       <div class="miniLink back"><Link to="/login">Login</Link></div>
       <TextField className="input" id="outlined-basic" label="Email" variant="outlined" type="email" value={email} onChange={e => setEmail(e.target.value)}/>
       <div class="button" onClick={() => handleRecover()}>Recover</div>
-    </>
-  )
-}
-
-type SetupProps = {
-  displayName: string,
-  setDisplayName: React.StateUpdater<string>,
-  userID: string,
-  setUserID: React.StateUpdater<string>,
-  handleFinalize: Function
-}
-
-function Setup({displayName, setDisplayName, userID, setUserID, handleFinalize}: SetupProps) {
-  return (
-    <>
-      <TextField className="input" id="outlined-basic" label="Display Name" variant="outlined" type="name" value={displayName} onChange={e => setDisplayName(e.target.value)}/>
-      <TextField className="input" id="outlined-basic" label="User ID" variant="outlined" type="user" value={userID} onChange={e => setUserID(e.target.value)}/>
-      <div class="button" onClick={() => handleFinalize()}>Finalize</div>
     </>
   )
 }

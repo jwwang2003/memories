@@ -1,1 +1,0 @@
-(self.webpackChunkra_memories=self.webpackChunkra_memories||[]).push([[523],{523:(e,r,u)=>{"use strict";u.r(r),u.d(r,{default:()=>l});var a=u(776);function l(){return a.az(a.HY,null,a.az("h1",null,"MAIN?"))}}}]);

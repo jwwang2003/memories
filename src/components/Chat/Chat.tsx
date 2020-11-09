@@ -1,9 +1,11 @@
 import * as React from 'react';
 
 export default function Chat() {
-    return (
-        <>
-
-        </>
-    )
+  return (
+    <>
+      <h1>
+        Not implemented yet!
+      </h1>
+    </>
+  )
 }

@@ -32,6 +32,31 @@
     transition: 0.1s ease;
     text-decoration: none;
     position: relative;
+
+    .indicator {
+      animation-name: animate-indicator;
+      animation-timing-function: ease;
+      animation-duration: 0.15s;
+      animation-iteration-count: 1;
+      height: 100%;
+      top: 0;
+      left: 0;
+      width: 3px;
+      background-color: var(--primary-color);
+      position: absolute;
+      filter: none;
+    }
+
+    @keyframes animate-indicator {
+      from {
+        height: 0%;
+        filter: opacity(0);
+      }
+      to {
+        height: 100%;
+        filter: opacity(1);
+      }
+    }
   }
 
   .item svg {

@@ -7,9 +7,7 @@ import * as firebase from 'firebase/app'
 import { Navbar , Recents, Chat, Friends, Myself, Settings } from '../../components';
 
 export default function Main() {
-  
-  console.log(firebase.default.firestore.Timestamp.now().toDate().toTimeString());
-
+  const { uid } = firebase.default.auth().currentUser;
   function handleLogout() {
     firebase.default.auth().signOut();
   }
